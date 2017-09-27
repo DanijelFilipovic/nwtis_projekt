@@ -1,0 +1,17 @@
+.row {
+  width: 100%;
+  display: block;
+}
+
+.row:after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.row > .column-3 {
+  width: 33%;
+  display: inline-block;
+  float: left;
+  padding: 1px;
+}

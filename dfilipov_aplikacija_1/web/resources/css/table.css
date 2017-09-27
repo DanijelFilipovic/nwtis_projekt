@@ -1,0 +1,103 @@
+body {
+  padding-top: 2em;
+}
+
+table {
+  margin: 0 auto;
+  background-color: #EEE;
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 80em;
+}
+
+table > thead {
+  background: linear-gradient(180deg, #4092D4, #196DB0);
+  border: solid 1px #005496;
+	font-size: 1em;;
+	font-weight: bold;
+	font-family: "Arial", "Helvetica", "DejaVu Sans";
+  color: WHITE;
+  line-height: 2em;
+}
+
+table > tbody {
+  border-left: solid 1px #CCC;
+	border-right: solid 1px #CCC;
+	border-bottom: solid 1px #CCC;
+}
+
+table > tbody > tr {
+  font-size: 1em;
+  font-family: "Arial", "Helvetica", "DejaVu Sans";
+  line-height: 2em;
+  text-align: center;
+}
+
+table > tbody > tr:nth-child(2n) {
+  background-color: #D5D5D5;
+}
+
+.pagination {
+  width: 80em;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 3em;
+}
+
+.pagination > .pagination-number {
+  display: inline-block;
+  width: 2em;
+}
+
+.pagination > .pagination-button {
+  width: 10em;
+  background-color: #EEE;
+  border: solid 1px #CCC;
+  padding: 5px 0;
+}
+
+.pagination > .pagination-button:enabled:hover {
+  cursor: pointer;
+  background-color: #CCC;
+  border-color: #BBB;
+}
+
+.lots-of-text > tbody > tr {
+  line-height: 1em;
+}
+
+.lots-of-text > tbody > tr > td {
+  word-wrap: break-word;
+  padding: 5px 0;
+}
+
+.wide {
+	width: 20em;
+}
+
+.filter {
+  width: 80em;
+  margin: 0 auto;
+  padding: 0.5em 0;
+  font-family: "Arial", "Helvetica", "DejaVu Sans";
+}
+
+.filter > input[type=submit] {
+  line-height: 2em;
+  width: 10em;
+  display: block;
+  margin-top: 0.5em;
+}
+
+.filter > label {
+  margin-left: 0.5em;
+}
+
+.filter > label:first-of-type {
+  margin-left: 0;
+}
+
+.filter > input[type=text],
+.filter > select {
+  width: 12em;
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>NWTiS - dfilipov</comment>
+<entry key="database.server">jdbc:derby://localhost:1527/</entry>
+<entry key="database.name">nwtis_dfilipov_bp_2</entry>
+<entry key="database.user">nwtis_g1</entry>
+<entry key="database.pass">foi2016</entry>
+<entry key="database.driver">org.apache.derby.jdbc.ClientDriver</entry>
+
+<entry key="mail.host">localhost</entry>
+<entry key="mail.address">servis@nwtis.projekt.foi.hr</entry>
+<entry key="mail.password">servis2016</entry>
+<entry key="mail.port.imap">143</entry>
+<entry key="mail.subject">NWTiS poruka - ADD</entry>
+<entry key="mail.folder.successful">SUCCESSFUL</entry>
+<entry key="mail.folder.unsuccessful">UNSUCCESSFUL</entry>
+<entry key="mail.folder.incorrect">INCORRECT</entry>
+
+<entry key="table.rowCount">10</entry>
+
+<entry key="registerer.interval">10</entry>
+
+<entry key="primitiveServer.port">8110</entry>
+<entry key="primitiveServer.host">localhost</entry>
+</properties>

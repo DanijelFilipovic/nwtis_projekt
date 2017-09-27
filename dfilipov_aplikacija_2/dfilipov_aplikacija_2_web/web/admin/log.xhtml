@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../baseTemplate.xhtml">
+
+            <ui:define name="stylesheets">
+                <h:outputStylesheet name="css/datatable.css"/>
+                <h:outputStylesheet name="css/datepicker.css"/>
+				<h:outputScript name="js/jquery.js"/>
+				<h:outputScript name="js/jquery-ui.js"/>
+				<h:outputScript name="js/loadDatepicker.js"/>
+            </ui:define>
+
+            <ui:define name="title">
+                #{lang.logTitle}
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form id="navigationForm" styleClass="navigation">
+					<ul>
+						<li><h:commandLink value="#{lang.indexTitle}" action="INDEX"/></li>
+						<c:if test="#{sessionScope.USER != null}">
+							<li><h:commandLink value="#{lang.addressesTitle}" action="ADDR"/></li>
+							<c:if test="#{sessionScope.USER.role.name == 'ADMIN'}">
+								<li><h:commandLink value="#{lang.pscTitle}" action="PRIMITIVE"/></li>
+								<li><h:commandLink value="#{lang.regRegisterTitle}" action="REGREQ"/></li>
+							</c:if>
+							<li><h:commandLink value="#{lang.logoutTitle}" action="#{logoutBean.logout()}"/></li>
+						</c:if>
+					</ul>
+				</h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form styleClass="filter" id="filterForm">
+					<h:outputLabel for="filterRequest">Zahtjev</h:outputLabel>
+					<h:inputText id="filterRequest" value="#{logBean.request}"/>
+					
+					<h:outputLabel for="filterUser">Korisnik</h:outputLabel>
+					<h:inputText id="filterUser" value="#{logBean.user}"/>
+					
+					<h:outputLabel for="filterDateFrom">Datum od</h:outputLabel>
+					<h:inputText styleClass="datepicker" id="filterDateFrom" value="#{logBean.dateFrom}">
+						<f:convertDateTime pattern="dd.MM.yyyy."/>
+					</h:inputText>
+					
+					<h:outputLabel for="filterDateTo">Datum do</h:outputLabel>
+					<h:inputText styleClass="datepicker" id="filterDateTo" value="#{logBean.dateTo}">
+						<f:convertDateTime pattern="dd.MM.yyyy."/>
+					</h:inputText>
+					
+					<h:commandButton id="filterSubmit" value="Potvrdi" action="#{logBean.resetPage()}">
+						<f:ajax execute="filterForm" render="datatable pagingForm"/>
+					</h:commandButton>
+				</h:form>
+				
+				<h:dataTable id="datatable" styleClass="datatable" value="#{logBean.logs}" var="log">
+					<h:column>
+						<f:facet name="header">ID</f:facet>
+						#{log.id}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Zahtjev</f:facet>
+						#{log.request}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Trajanje</f:facet>
+						#{log.length}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Korisnik</f:facet>
+						#{log.user.username}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Datum i vrijeme</f:facet>
+						<h:outputText value="#{log.datetime}">
+							<f:convertDateTime pattern="dd.MM.yyyy. HH:mm:ss"/>
+						</h:outputText>
+					</h:column>
+				</h:dataTable>
+				<h:form id="pagingForm" class="pagingForm">
+					<h:commandButton value="-" action="#{logBean.decrementPage()}">
+						<f:ajax execute="pagingForm" render="datatable pagingForm"/>
+					</h:commandButton>
+					<h:outputText value="#{logBean.currentPage}"/>
+					<h:commandButton value="+" action="#{logBean.incrementPage()}">
+						<f:ajax execute="pagingForm" render="datatable pagingForm"/>
+					</h:commandButton>
+				</h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

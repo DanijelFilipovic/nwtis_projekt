@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+	<body>
+
+        <ui:composition template="./baseTemplate.xhtml">
+
+			<ui:define name="stylesheets">
+				<h:outputStylesheet name="css/inputForm.css"/>
+			</ui:define>
+			
+            <ui:define name="title">
+				#{lang.registerTitle}
+			</ui:define>
+
+			<ui:define name="left">
+				<h:form id="navigationForm" styleClass="navigation">
+					<ul>
+						<li><h:commandLink value="#{lang.indexTitle}" action="INDEX"/></li>
+						<c:if test="#{sessionScope.USER == null}">
+							<li><h:commandLink value="#{lang.loginTitle}" action="LOGIN"/></li>
+						</c:if>
+						<c:if test="#{sessionScope.USER != null}">
+							<li><h:commandLink value="#{lang.logoutTitle}" action="#{logoutBean.logout()}"/></li>
+						</c:if>
+					</ul>
+				</h:form>
+			</ui:define>
+
+			<ui:define name="content">
+				<h:form id="registerForm" styleClass="input-form">
+					<h:outputLabel for="inputUsername">#{lang.registerInputUsername}</h:outputLabel>
+					<h:inputText id="inputUsername" value="#{registerBean.username}"/>
+					<br/>
+					
+					<h:outputLabel for="inputSurname">#{lang.registerInputSurname}</h:outputLabel>
+					<h:inputText id="inputSurname" value="#{registerBean.surname}"/>
+					<br/>
+					
+					<h:outputLabel for="inputPassword">#{lang.registerInputPassword}</h:outputLabel>
+					<h:inputSecret id="inputPassword" value="#{registerBean.password}"/>
+					<br/>
+					
+					<h:outputLabel for="inputPasswordAgain">#{lang.registerInputRepeatPassword}</h:outputLabel>
+					<h:inputSecret id="inputPasswordAgain" value="#{registerBean.passwordAgain}"/>
+					<br/>
+					
+					<h:outputLabel for="inputEmail">#{lang.registerInputEmail}</h:outputLabel>
+					<h:inputText id="inputEmail" value="#{registerBean.email}"/>
+					<br/>
+					
+					<h:outputLabel for="inputType">#{lang.registerInputType}</h:outputLabel>
+					<h:selectOneMenu id="inputType" value="#{registerBean.userType}">
+						<f:selectItem itemLabel="#{lang.registerInputTypeUSER}" itemValue="1"/>
+						<f:selectItem itemLabel="#{lang.registerInputTypeADMIN}" itemValue="2"/>
+					</h:selectOneMenu>
+					<br/>
+					
+					<h:commandButton value="#{lang.registerSubmit}" action="#{registerBean.processRegistration()}"/>
+				</h:form>
+				<h:panelGroup>
+					<c:forEach items="#{registerBean.errorCodes}" var="error">
+						<c:if test="#{error == 0}">
+							#{lang.registerError0}<br/>
+						</c:if>
+						<c:if test="#{error == 1}">
+							#{lang.registerError1}<br/>
+						</c:if>
+						<c:if test="#{error == 2}">
+							#{lang.registerError2}<br/>
+						</c:if>
+						<c:if test="#{error == 3}">
+							#{lang.registerError3}<br/>
+						</c:if>
+						<c:if test="#{error == 4}">
+							#{lang.registerError4}<br/>
+						</c:if>
+						<c:if test="#{error == 5}">
+							#{lang.registerError5}<br/>
+						</c:if>
+						<c:if test="#{error == 6}">
+							#{lang.registerError6}<br/>
+						</c:if>
+						<c:if test="#{error == 7}">
+							#{lang.registerError7}<br/>
+						</c:if>
+						<c:if test="#{error == 8}">
+							#{lang.registerError8}<br/>
+						</c:if>
+					</c:forEach>
+				</h:panelGroup>
+			</ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

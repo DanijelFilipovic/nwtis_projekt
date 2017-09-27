@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+	
+	<body>
+
+        <ui:composition template="./baseTemplate.xhtml">
+
+            <ui:define name="stylesheets">
+				<h:outputStylesheet name="css/inputForm.css"/>
+			</ui:define>
+            
+			<ui:define name="title">
+				#{lang.loginTitle}
+			</ui:define>
+
+			<ui:define name="left">
+				<h:form id="navigationForm" styleClass="navigation">
+					<ul>
+						<li><h:commandLink value="#{lang.indexTitle}" action="INDEX"/></li>
+						<c:if test="#{sessionScope.USER == null}">
+							<li><h:commandLink value="#{lang.registerTitle}" action="REGISTER"/></li>
+						</c:if>
+						<c:if test="#{sessionScope.USER != null}">
+							<li><h:commandLink value="#{lang.logoutTitle}" action="#{logoutBean.logout()}"/></li>
+						</c:if>
+					</ul>
+				</h:form>
+			</ui:define>
+
+			<ui:define name="content">
+				<h:form id="registerForm" styleClass="input-form">
+					<h:outputLabel for="inputUsername">#{lang.loginInputUsername}</h:outputLabel>
+					<h:inputText id="inputUsername" value="#{loginBean.username}"/>
+					<br/>
+					
+					<h:outputLabel for="inputPassword">#{lang.loginInputPassword}</h:outputLabel>
+					<h:inputSecret id="inputPassword" value="#{loginBean.password}"/>
+					<br/>
+					
+					<h:commandButton id="formSubmit" value="#{lang.loginSubmit}" action="#{loginBean.processLogin()}"/>
+				</h:form>
+				<h:panelGroup id="errorMessages">
+					<c:forEach items="#{loginBean.errorCodes}" var="error">
+						<c:if test="#{error == 0}">
+							#{lang.loginError0}<br/>
+						</c:if>
+						<c:if test="#{error == 1}">
+							#{lang.loginError1}<br/>
+						</c:if>
+						<c:if test="#{error == 2}">
+							#{lang.loginError2}<br/>
+						</c:if>
+						<c:if test="#{error == 3}">
+							#{lang.loginError3}<br/>
+						</c:if>
+						<c:if test="#{error == 4}">
+							#{lang.loginError4}<br/>
+						</c:if>
+					</c:forEach>
+				</h:panelGroup>
+			</ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

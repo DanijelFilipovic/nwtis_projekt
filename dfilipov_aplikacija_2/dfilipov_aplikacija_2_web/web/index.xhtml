@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./baseTemplate.xhtml">
+
+			<ui:define name="stylesheets">
+				<h:outputStylesheet name="css/inputForm.css"/>
+			</ui:define>
+			
+            <ui:define name="title">
+				#{lang.indexTitle}
+			</ui:define>
+
+			<ui:define name="left">
+				<h:form id="navigationForm" styleClass="navigation">
+					<ul>
+						<c:if test="#{sessionScope.USER == null}">
+							<li><h:commandLink value="#{lang.loginTitle}" action="LOGIN"/></li>
+							<li><h:commandLink value="#{lang.registerTitle}" action="REGISTER"/></li>
+						</c:if>
+						<c:if test="#{sessionScope.USER != null}">
+							<li><h:commandLink value="#{lang.addressesTitle}" action="ADDR"/></li>
+							<c:if test="#{sessionScope.USER.role.name == 'ADMIN'}">
+								<li><h:commandLink value="#{lang.pscTitle}" action="PRIMITIVE"/></li>
+								<li><h:commandLink value="#{lang.regRegisterTitle}" action="REGREQ"/></li>
+								<li><h:commandLink value="#{lang.logTitle}" action="LOG"/></li>
+							</c:if>
+							<li><h:commandLink value="#{lang.logoutTitle}" action="#{logoutBean.logout()}"/></li>
+						</c:if>
+					</ul>
+				</h:form>
+			</ui:define>
+
+			<ui:define name="content">
+				<h:form id="changeLanguageForm" class="input-form">
+					<h:outputLabel for="selectLanguage" value="#{lang.indexChangeLanguage}"/>
+					<h:selectOneRadio id="selectLanguage" value="#{languageBean.currentLanguage}">
+						<f:selectItems value="#{languageBean.languages}"/>
+					</h:selectOneRadio>
+					<h:commandButton value="#{lang.indexChange}"/>
+				</h:form>
+			</ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

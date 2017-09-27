@@ -1,0 +1,10 @@
+.input-form > label {
+  display: inline-block;
+  width: 11em;
+  margin-top: 0.5em;
+  font-weight: bold;
+}
+
+.input-form > input[type=submit] {
+  margin-top: 2em;
+}

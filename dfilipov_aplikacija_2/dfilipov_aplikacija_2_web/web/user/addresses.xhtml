@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+        <ui:composition template="./../baseTemplate.xhtml">
+
+            <ui:define name="stylesheets">
+                <h:outputStylesheet name="css/addresses.css"/>
+				<h:outputStylesheet name="css/datatable.css"/>
+            </ui:define>
+
+            <ui:define name="title">
+                #{lang.addressesTitle}
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form id="navigationForm" styleClass="navigation">
+					<ul>
+						<li><h:commandLink value="#{lang.indexTitle}" action="INDEX"/></li>
+						<c:if test="#{sessionScope.USER != null}">
+							<c:if test="#{sessionScope.USER.role.name == 'ADMIN'}">
+								<li><h:commandLink value="#{lang.pscTitle}" action="PRIMITIVE"/></li>
+								<li><h:commandLink value="#{lang.logTitle}" action="LOG"/></li>
+							</c:if>
+							<li><h:commandLink value="#{lang.logoutTitle}" action="#{logoutBean.logout()}"/></li>
+						</c:if>
+					</ul>
+				</h:form>
+            </ui:define>
+
+            <ui:define name="content">
+				<h:form id="addressForm">
+					<div class="row">
+						<div class="column-3">
+							<h:commandButton value="#{lang.addressesReload}" action="#{addressesBean.reload()}">
+								<f:ajax execute="addressForm" render="allAddresses"/>
+							</h:commandButton>
+						</div>
+						<div class="column-3">&nbsp;</div>
+						<div class="column-3">
+							<h:outputLabel for="newAddress" value="#{lang.addressesNewAddress} "/>
+							<h:inputText id="newAddress" value="#{addressesBean.newAddress}"/>
+							<h:commandButton value="#{lang.addressesAddAddress}" action="#{addressesBean.addNewMessage(sessionScope.USER)}">
+								<f:ajax execute="newAddress"/>
+							</h:commandButton>
+						</div>
+					</div>
+					<div class="row">
+						<h:panelGroup class="column-3" id="allAddresses">
+							<h:selectManyListbox size="15" value="#{addressesBean.chosenAddressIDs}" id="allAddressesSelect">
+								<f:selectItems value="#{addressesBean.addresses}" 
+											   var="address" 
+											   itemLabel="#{address.address}"
+											   itemValue="#{address.ID}"/>
+							</h:selectManyListbox>
+						</h:panelGroup>
+						<div class="column-3 vertical-controls" id="verticalControls">
+							<h:commandButton value="#{lang.addressesToggleOwnAddresses}" action="#{addressesBean.toggleShowOwnAddresses(sessionScope.USER)}">
+								<f:ajax execute="addressFrom" render="ownAddresses"/>
+							</h:commandButton>
+							<h:commandButton value="#{lang.addressesToggleMeteoData}" action="#{addressesBean.toggleShowMeteoData(sessionScope.USER)}">
+								<f:ajax execute="allAddressesSelect" render="latestMeteoData"/>
+							</h:commandButton>
+							<h:commandButton value="#{lang.addressesToggleForecast}" action="#{addressesBean.toggleShowForecast(sessionScope.USER)}">
+								<f:ajax execute="allAddressesSelect" render="latestForecast"/>
+							</h:commandButton>
+						</div>
+						<h:panelGroup id="ownAddresses" styleClass="column-3" layout="block">
+							<h:selectManyListbox size="15" rendered="#{addressesBean.showingOwnAddresses}">
+								<f:selectItems value="#{addressesBean.ownAddresses}" 
+											   var="ownAddress" 
+											   itemLabel="#{ownAddress.address}"
+											   itemValue="#{ownAddress.ID}"
+											   itemDisabled="true"/>
+							</h:selectManyListbox>
+						</h:panelGroup>
+					</div>
+					<h:panelGroup styleClass="row" id="latestMeteoData">
+						<h:dataTable value="#{addressesBean.latestMeteoData}" var="meteo" rendered="#{addressesBean.showingMeteoData}"
+									 styleClass="datatable">
+							<h:column>
+								<f:facet name="header">#{lang.meteoAddress}</f:facet>
+								#{meteo.address.address}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoTemp}</f:facet>
+								#{meteo.temperature}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoHumidity}</f:facet>
+								#{meteo.humidity}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoPressure}</f:facet>
+								#{meteo.pressure}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoWeather}</f:facet>
+								#{meteo.weather}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoWindSpeed}</f:facet>
+								#{meteo.windSpeed}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoLastUpdate}</f:facet>
+								<h:outputText value="#{meteo.lastUpdate.toGregorianCalendar().time}">
+									<f:convertDateTime pattern="dd.MM.yyyy. HH:mm:ss"/>
+								</h:outputText>
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoLastDownload}</f:facet>
+								<h:outputText value="#{meteo.lastDownload.toGregorianCalendar().time}">
+									<f:convertDateTime pattern="dd.MM.yyyy. HH:mm:ss"/>
+								</h:outputText>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+					<h:panelGroup layout="block" id="latestForecast">
+						<h:dataTable value="#{addressesBean.latestForecast}" var="meteo" rendered="#{addressesBean.showingLatestForecast}"
+									 styleClass="datatable">
+							<h:column>
+								<f:facet name="header">#{lang.meteoTemp}</f:facet>
+								#{meteo.temperature}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoHumidity}</f:facet>
+								#{meteo.humidity}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoPressure}</f:facet>
+								#{meteo.pressure}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoWeather}</f:facet>
+								#{meteo.weather}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoWindSpeed}</f:facet>
+								#{meteo.windSpeed}
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoForecastTime}</f:facet>
+								<h:outputText value="#{meteo.lastUpdate}">
+									<f:convertDateTime pattern="dd.MM.yyyy. HH:mm:ss"/>
+								</h:outputText>
+							</h:column>
+							<h:column>
+								<f:facet name="header">#{lang.meteoLastDownload}</f:facet>
+								<h:outputText value="#{meteo.lastDownload}">
+									<f:convertDateTime pattern="dd.MM.yyyy. HH:mm:ss"/>
+								</h:outputText>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+				</h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

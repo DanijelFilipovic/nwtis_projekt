@@ -1,0 +1,5 @@
+.navigation > ul {
+  list-style-type: none;
+  list-style-position: outside;
+  padding-left: 1em;
+}

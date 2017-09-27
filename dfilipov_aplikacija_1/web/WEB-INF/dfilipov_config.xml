@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>NWTiS - dfilipov</comment>
+<entry key="database.server">jdbc:mysql://localhost:3306/</entry>
+<entry key="database.name">nwtis_dfilipov_bp_1</entry>
+<entry key="database.user">nwtis_g1</entry>
+<entry key="database.pass">foi2016</entry>
+<entry key="database.driver">com.mysql.jdbc.Driver</entry>
+<entry key="owm.apiKey">3d6424dfeebef3f5c0bc9e414e2be435</entry>
+<entry key="owm.downloadInterval">600</entry>
+<entry key="backgroundServer.port">8110</entry>
+<entry key="backgroundServer.threadPoolSize">4</entry>
+<entry key="mail.host">localhost</entry>
+<entry key="mail.address.from">dfilipov.aplikacija.1@nwtis.projekt.foi.hr</entry>
+<entry key="mail.password.from">nwtis2016</entry>
+<entry key="mail.address.to">servis@nwtis.projekt.foi.hr</entry>
+<entry key="mail.password.to">servis2016</entry>
+<entry key="mail.port.smtp">25</entry>
+<entry key="mail.subject">NWTiS poruka - ADD</entry>
+<entry key="table.rowCount">15</entry>
+</properties>

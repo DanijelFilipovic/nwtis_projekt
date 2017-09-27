@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../baseTemplate.xhtml">
+			
+            <ui:define name="stylesheets">
+                <h:outputStylesheet name="css/psControls.css"/>
+            </ui:define>
+            
+			<ui:define name="title">
+                #{lang.pscTitle}
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form id="navigationForm" styleClass="navigation">
+					<ul>
+						<li><h:commandLink value="#{lang.indexTitle}" action="INDEX"/></li>
+						<c:if test="#{sessionScope.USER != null}">
+							<li><h:commandLink value="#{lang.addressesTitle}" action="ADDR"/></li>
+							<c:if test="#{sessionScope.USER.role.name == 'ADMIN'}">
+								<li><h:commandLink value="#{lang.regRegisterTitle}" action="REGREQ"/></li>
+								<li><h:commandLink value="#{lang.logTitle}" action="LOG"/></li>
+							</c:if>
+							<li><h:commandLink value="#{lang.logoutTitle}" action="#{logoutBean.logout()}"/></li>
+						</c:if>
+					</ul>
+				</h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGrid columns="2">
+					<panelGroup id="psControls">
+						<h:form id="psControlsForm" styleClass="primitive-server-control-group">
+							<h:commandButton value="#{lang.pscStart}" action="#{pscBean.sendStartCommand(sessionScope.USER)}"/>
+							<h:commandButton value="#{lang.pscPause}" action="#{pscBean.sendPauseCommand(sessionScope.USER)}"/>
+							<h:commandButton value="#{lang.pscStop}" action="#{pscBean.sendStopCommand(sessionScope.USER)}"/>
+							<h:commandButton value="#{lang.pscStatus}" action="#{pscBean.sendStatusCommand(sessionScope.USER)}"/>
+						</h:form>
+					</panelGroup>
+					<panelGroup id="psStatus">
+						<c:if test="#{pscBean.serverMessageCode == 0}">
+							#{lang.pscMessage0}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 1}">
+							#{lang.pscMessage1}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 2}">
+							#{lang.pscMessage2}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 3}">
+							#{lang.pscMessage3}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 4}">
+							#{lang.pscMessage4}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 5}">
+							#{lang.pscMessage5}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 6}">
+							#{lang.pscMessage6}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 7}">
+							#{lang.pscMessage7}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 8}">
+							#{lang.pscMessage8}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 9}">
+							#{lang.pscMessage9}
+						</c:if>
+						<c:if test="#{pscBean.serverMessageCode == 10}">
+							#{lang.pscMessage10}
+						</c:if>
+					</panelGroup>
+				</h:panelGrid>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

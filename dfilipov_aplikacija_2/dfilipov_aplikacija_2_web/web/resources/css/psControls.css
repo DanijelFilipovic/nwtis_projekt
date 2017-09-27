@@ -1,0 +1,5 @@
+.primitive-server-control-group > input[type=submit] {
+  display: block;
+  width: 10em;
+  margin-bottom: 5px;
+}

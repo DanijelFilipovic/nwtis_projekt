@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>NWTiS - dfilipov</comment>
+<entry key="table.rowCount">10</entry>
+<entry key="primitiveServer.port">8110</entry>
+<entry key="primitiveServer.host">localhost</entry>
+<entry key="web.service.username">danijel</entry>
+<entry key="web.service.password">lejinad</entry>
+</properties>

@@ -1,0 +1,41 @@
+html {
+  background-color: WHITE;
+}
+
+body {
+  width: 50em;
+  margin: 5px auto;
+  background-color: #EEE;
+}
+
+.row {
+  width: 100%;
+  display: block;
+}
+
+.row:before,
+.row:after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+.row > .column-3 {
+  width: 33%;
+  display: inline-block;
+  float: left;
+  padding: 1px;
+}
+
+.row > .column-2of3 {
+  width: 66%;
+  display: inline-block;
+  float: left;
+  padding: 1.5px;
+}
+
+.meteoData > .meteoLabel {
+  font-weight: bold;
+  display: inline-block;
+  width: 10em;
+}

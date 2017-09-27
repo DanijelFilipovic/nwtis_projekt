@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../baseTemplate.xhtml">
+
+            <ui:define name="stylesheets">
+				<h:outputStylesheet name="css/datatable.css"/>
+            </ui:define>
+
+            <ui:define name="title">
+                #{lang.regRegisterTitle}
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form id="navigationForm" styleClass="navigation">
+					<ul>
+						<li><h:commandLink value="#{lang.indexTitle}" action="INDEX"/></li>
+						<c:if test="#{sessionScope.USER != null}">
+							<li><h:commandLink value="#{lang.addressesTitle}" action="ADDR"/></li>
+							<c:if test="#{sessionScope.USER.role.name == 'ADMIN'}">
+								<li><h:commandLink value="#{lang.pscTitle}" action="PRIMITIVE"/></li>
+								<li><h:commandLink value="#{lang.logTitle}" action="LOG"/></li>
+							</c:if>
+							<li><h:commandLink value="#{lang.logoutTitle}" action="#{logoutBean.logout()}"/></li>
+						</c:if>
+					</ul>
+				</h:form>
+            </ui:define>
+
+            <ui:define name="content">
+				<h:form id="waitingUsersForm">
+					<h:commandButton value="#{lang.regRequestReload}" action="#{registerRequestsBean.reload()}">
+						<f:ajax execute="waitingUsersForm" render="waitingUsersForm"/>
+					</h:commandButton>
+					<h:dataTable id="waitingUsers" class="datatable" value="#{registerRequestsBean.waitingUsers}" var="waitingUser">
+						<h:column>
+							<f:facet name="header">#{lang.regRequestUsername}</f:facet>
+							#{waitingUser.username}
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{lang.regRequestSurname}</f:facet>
+							#{waitingUser.surname}
+						</h:column>
+						<h:column>
+							<f:facet name="header">E-mail</f:facet>
+							#{waitingUser.email}
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{lang.regRequestRole}</f:facet>
+							#{waitingUser.role.name}
+						</h:column>
+						<h:column>
+							<f:facet name="header">#{lang.regRequestAccept}/#{lang.regRequestDecline}</f:facet>
+							<h:commandButton value="#{lang.regRequestAccept}" 
+											 action="#{registerRequestsBean.acceptUser(waitingUser.id, sessionScope.USER)}">
+								<f:ajax execute="waitingUsersForm" render="waitingUsersForm"/>
+							</h:commandButton>
+							<h:commandButton value="#{lang.regRequestDecline}" action="#{registerRequestsBean.declineUser(waitingUser.id)}">
+								<f:ajax execute="waitingUsersForm" render="waitingUsersForm"/>
+							</h:commandButton>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+				<c:if test="#{registerRequestsBean.errorCode == 1}">
+					#{lang.regRequestError1}
+				</c:if>
+				<c:if test="#{registerRequestsBean.errorCode == 2}">
+					#{lang.regRequestError2}
+				</c:if>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
